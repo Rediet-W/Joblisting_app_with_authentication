@@ -10,10 +10,13 @@ const GoogleSignInButton = () => {
   return (
     <button
       onClick={handleGoogleSignIn}
-      className="border border-[#33357c] w-full flex justify-center p-4  mb-2"
+      className="border border-[rgba(204,204,245,1)] w-full flex justify-center p-4 my-4"
     >
       <img src="./google.png" alt="google" className="w-6 h-6" />
-      <p className="text-[#33357c]  "> Sign Up with Google</p>
+      <p className="text-center font-poppins font-black text-xl text-[#33357c] px-2">
+        {" "}
+        Sign Up with Google
+      </p>
     </button>
   );
 };

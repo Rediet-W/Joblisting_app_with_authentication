@@ -68,7 +68,7 @@ const Login: React.FC = () => {
             Login
           </button>
         </form>
-        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)]">
+        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)] py-3">
           Don't have an account?
           <a href="/signup" className="text-[#33357c]">
             Sign Up

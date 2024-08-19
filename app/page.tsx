@@ -1,27 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSession } from "next-auth/react";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import Nav from "./components/nav";
 import Dashboard from "./components/dashboard";
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Check if the accessToken exists in localStorage
-    const token = localStorage.getItem("accessToken");
-
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
+  const { data: session, status } = useSession();
+  console.log(session);
   return (
     <>
       <Nav />
-      {isAuthenticated ? (
+      {status === "authenticated" ? (
         <>
           <Dashboard />
         </>

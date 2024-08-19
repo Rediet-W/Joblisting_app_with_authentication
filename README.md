@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Job Listing Application with Authentication
 
-## Getting Started
+This project is a job listing application built with React and Next.js. It demonstrates the ability to create dynamic user interfaces, handle static data, and implement responsive designs using Tailwind CSS. The application features a job listing dashboard, job detail views, and various UI components such as job cards populated with dummy data.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Job Card Component:** A React component that closely resembles the design provided in the task.
+- **Dynamic Data Handling:** The card is populated with dummy data from a JSON file stored in the project.
+- **Job Listing Dashboard:** A dashboard that lists all available job opportunities, styled using Tailwind CSS.
+- **Job Details Page:** Detailed view of each job, including description, responsibilities, and other relevant information.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To get started with this project, follow the steps below:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Clone the repository:**
 
-## Learn More
+   ```bash
+   git clone https://github.com/Rediet-W/Web_Track.git
+    Navigate to the project directory:
 
-To learn more about Next.js, take a look at the following resources:
+    cd Web_Track
+    Install dependencies:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    npm install
+    Start the development server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    npm run dev
+    Open your browser and go to http://localhost:3000 to view the application.
+   ```
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The main job listing page is accessible at /jobs, where you can view the list of all job opportunities.
+Click on any job title to view the detailed job description.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Screenshots
+
+###Job Listing Dashboard:
+![Screenshot](public/jobs_list.png)
+
+This page displays a list of all job opportunities available.
+###Job Detail Page:
+
+![Screenshot](public/jobs_detail.png)
+Provides a detailed view of a selected job, including its description, responsibilities, location, and required skills.

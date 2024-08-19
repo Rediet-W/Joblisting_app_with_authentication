@@ -30,7 +30,7 @@ const Signup = () => {
     setPasswordError(null);
 
     const result = await signIn("akilsignup", {
-      redirect: false,
+      // redirect: false,
       name: data.fullname,
       email: data.email,
       password: data.password,
@@ -44,10 +44,6 @@ const Signup = () => {
       // If sign-up was successful, redirect to the verify page
       window.location.href = `/verify?email=${encodeURIComponent(data.email)}`;
     }
-  };
-
-  const handleGoogleSignIn = async () => {
-    await signIn("google", { callbackUrl: "/" });
   };
 
   return (
@@ -143,13 +139,13 @@ const Signup = () => {
           </button>
         </form>
 
-        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)]">
+        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)] py-2">
           Already have an account?{" "}
           <a href="/login" className="text-[#33357c]">
             Login
           </a>
         </p>
-        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)]">
+        <p className="font-normal font-Epilogue text-[rgba(124,132,147,1)] py-2">
           By clicking 'continue', you acknowledge that you have read and
           accepted our{" "}
           <a href="" className="text-[#33357c]">

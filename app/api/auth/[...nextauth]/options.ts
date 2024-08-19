@@ -23,21 +23,35 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch("https://akil-backend.onrender.com/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        });
+        try {
+          const res = await fetch("https://akil-backend.onrender.com/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+            }),
+          });
 
-        const user = await res.json();
+          const user = await res.json();
 
-        if (res.ok && user) {
-          return user;
+          if (!res.ok) {
+            // Handle the error and provide a message
+            throw new Error(
+              user?.message || "Failed to login. Please check your credentials."
+            );
+          }
+
+          if (user) {
+            // Optionally, customize the user object here
+            return { ...user, role: user.role || "user" }; // Add default role if not provided
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          throw new Error("Login failed. Please try again.");
         }
-        return null;
       },
     }),
 
@@ -53,24 +67,39 @@ export const authOptions: NextAuthOptions = {
         role: { label: "Role", type: "text", placeholder: "user" },
       },
       async authorize(credentials) {
-        const res = await fetch("https://akil-backend.onrender.com/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: credentials?.name,
-            email: credentials?.email,
-            password: credentials?.password,
-            confirmPassword: credentials?.confirmPassword,
-            role: credentials?.role || "user",
-          }),
-        });
+        try {
+          const res = await fetch("https://akil-backend.onrender.com/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: credentials?.name,
+              email: credentials?.email,
+              password: credentials?.password,
+              confirmPassword: credentials?.confirmPassword,
+              role: credentials?.role || "user",
+            }),
+          });
 
-        const user = await res.json();
+          const result = await res.json();
 
-        if (res.ok && user) {
-          return user;
+          if (!res.ok) {
+            // Handle the error and provide a message
+            throw new Error(
+              result.message || "Failed to sign up. Please check your details."
+            );
+          }
+
+          if (result.data) {
+            return { ...result.data, role: result.data.role || "user" };
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log("Signup error:", error);
+          throw new Error(
+            (error as Error).message || "Signup failed. Please try again."
+          );
         }
-        return null;
       },
     }),
 
@@ -83,30 +112,44 @@ export const authOptions: NextAuthOptions = {
         otp: { label: "OTP", type: "text" },
       },
       async authorize(credentials) {
-        const res = await fetch(
-          "https://akil-backend.onrender.com/verify-email",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: credentials?.email,
-              OTP: credentials?.otp,
-            }),
+        try {
+          const res = await fetch(
+            "https://akil-backend.onrender.com/verify-email",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: credentials?.email,
+                OTP: credentials?.otp,
+              }),
+            }
+          );
+
+          const user = await res.json();
+
+          if (!res.ok) {
+            // Handle the error and provide a message
+            throw new Error(
+              user?.message || "Failed to verify email. Please check the OTP."
+            );
           }
-        );
 
-        const user = await res.json();
-
-        if (res.ok && user) {
-          return user;
+          if (user) {
+            return { ...user, status: "authenticated" }; // Optionally, customize the user object here
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Verification error:", error);
+          throw new Error("Verification failed. Please try again.");
         }
-        return null;
       },
     }),
   ],
   pages: {
-    signIn: "/signin",
-    verifyRequest: "/verify-request",
+    signIn: "/",
+    verifyRequest: "/verify",
+    error: "/auth/error", // Redirect to a custom error page
   },
   callbacks: {
     async session({ session, token }) {
@@ -123,7 +166,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
 };
 
 export default NextAuth(authOptions);
